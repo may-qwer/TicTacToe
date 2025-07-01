@@ -7,8 +7,8 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder/*.cpp}",
-                "${workspaceFolder/classes/*.cpp}",
+                "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/classes/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
