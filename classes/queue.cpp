@@ -15,14 +15,43 @@ Note::~Note(){
 
 }
 
+void Note::set_data(const int x, const int y) {
+    data_x = x;
+    data_y = y;
+}
 
+void Note::set_next(Note* n) {
+    next = n;
+}
 
-Queue::Queue() {
+void Note::set_prev(Note* p) {
+    prev = p;
+}
+
+int Note::get_x() {
+    return data_x;
+}
+
+int Note::get_y() {
+    return data_y;
+}
+
+Note* Note::get_next() {
+    return next;
+}
+
+Note* Note::get_prev() {
+    return prev;
+}
+
+Queue::Queue(int l) {
+    len = l;
     head = new Note;
     tail = new Note;
-    head->next = tail;
-    tail->prev = head;
-
+    head->set_next(tail);
+    head->set_prev(0);
+    tail->set_next(0);
+    tail->set_prev(head);
 }
 
 Queue::~Queue() {
@@ -32,23 +61,47 @@ Queue::~Queue() {
 
 //set to tail, get from head
 
-void Queue::push(int x, int y) {
-    Note* new_note = new Note;
-    Note* tmp = new Note;
-    tmp = tail;
-    new_note->data_x = x;
-    new_note->data_y = y;
-    new_note->next = tail;
-    new_note->prev = tail->prev;
-    tmp->prev->next = new_note;
-    tail->prev = new_note;
-    delete tmp;
+void Queue::push(const int x, const int y) {
+    if (len != get_len()) {
+        Note* new_note = new Note;
+        new_note->set_data(x, y);
+        new_note->set_next(tail);
+        tail->get_prev()->set_next(new_note);
+        new_note->set_prev(tail->get_prev());
+        tail->set_prev(new_note);
+    }
+}
+
+void Queue::peek(int& x, int& y) {
+    x = head->get_next()->get_x();
+    y = head->get_next()->get_y();
 }
 
 void Queue::pop(int& x, int& y) {
+    if (get_len() != 0) {
+        Note* tmp = new Note;
+        tmp = head->get_next();
+        x = head->get_next()->get_x();
+        y = head->get_next()->get_y();
+        head->set_next(head->get_next()->get_next());
+        delete tmp;
+    }
+}
 
+int Queue::get_len(Note* el) {
+    if (el != tail) {
+        return get_len(el->get_next()) + 1; 
+    }
+    return -1;
+}
+
+int Queue::get_len() {
+    return get_len(head);
 }
 
 void Queue::remove() {
-
+    int tmp_x, tmp_y;
+    while (head->get_next() != tail) {
+        pop(tmp_x, tmp_y);
+    }
 }
