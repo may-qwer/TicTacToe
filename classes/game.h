@@ -7,6 +7,7 @@ class Game {
 private:
     bool running;
     bool one_more;
+    int counter;
     Screen* main_screen;
     
 public:
@@ -17,6 +18,8 @@ public:
     ~Game();
 
     void show_screen();
+
+    void who_go();
 
 };
 

@@ -1,15 +1,30 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "queue.h"
+
+#define COUNT_OF_STAPS 3
+
 class Player {
 private:
-    int num_of_stap;
-     
+     char* cell;
+     char* sign;
+     Queue staps;
 
 public:
-    Player(int num);
+    Player(char* sign);
 
     ~Player();
+
+    char* get_cell();
+
+    char* get_sign();
+
+    void set_cell();
+
+    void make_stap();
+
+    void check_for_win();
 
 };
 

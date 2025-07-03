@@ -3,7 +3,7 @@
 
 class Screen {
 private:
-    char** screen;
+    char*** screen;
     int x_size;
     int y_size;
 
@@ -16,11 +16,11 @@ public:
 
     void get_sizes(int& x_size, int& y_size);
 
-    char get_el(const int x, const int y);
+    char* get_el(const int x, const int y);
 
-    void set_el(const int x, const int y, const char el);
+    void set_el(const int x, const int y, char* el);
 
-    void set_all_el(const char el);
+    void set_all_el(char* el);
 
 };
 
