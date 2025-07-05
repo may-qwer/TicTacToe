@@ -16,11 +16,11 @@ public:
 
     ~Player();
 
-    char* get_cell();
+    char* get_cell(const int x, const int y);
 
     char* get_sign();
 
-    void set_cell();
+    void set_cell(const int x, const int y);
 
     void make_stap();
 
