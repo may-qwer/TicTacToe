@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     Game game;
-    game.main_cycle();
+    game.main_cyrcle();
 
     return 0;
 }

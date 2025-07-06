@@ -11,18 +11,18 @@ private:
      char* sign;
      Queue staps;
 
+     void set_all_cell_empty();
+
 public:
     Player(char* sign);
 
     ~Player();
 
-    char* get_cell(const int x, const int y);
-
     char* get_sign();
 
-    void set_cell(const int x, const int y);
+    void get_el(const int num_of_el, int& x, int& y);
 
-    void make_stap();
+    void make_stap(const int x, const int y);
 
     void check_for_win();
 

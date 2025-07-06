@@ -5,13 +5,14 @@ using namespace std;
 
 #define SIZE_OF_SCREEN 3
 #define BLUE_CROSS "\033[1;34mX\033[0m"
-#define RAD_CYRCLE "\033[1;31mO\033[0m"
+#define RAD_CIRCLE "\033[1;31mO\033[0m"
 #define EMPTY " "
 #define BLUE "\033[1;34m"
 #define RAD "\033[1;31m"
 #define RESET "\033[0m"
 #define MSG_INPUT "Enter number, like 11, of cell, where you wont to set you sign: "
-#define MSG_NUT_CORRECT_INPUT "Your input is not correct. Try again: "
+#define MSG_NOT_CORRECT_INPUT "Your input is not correct. Try again: "
+#define MSG_NOT_EMPTY_CELL "You choose not empty cell. Try again: "
 
 
 
@@ -21,29 +22,31 @@ Game::Game() {
     counter = 0;
     main_screen = new Screen(SIZE_OF_SCREEN, SIZE_OF_SCREEN);
     player_cross = new Player(BLUE_CROSS);
-    player_cyrcle = new Player(RAD_CYRCLE);
+    player_cicrle = new Player(RAD_CIRCLE);
     cell = new char[2];
 }
 
 Game::~Game() {
     delete main_screen;
     delete player_cross;
-    delete player_cyrcle;
+    delete player_cicrle;
+    delete cell;
 }
 
-void Game::main_cycle() {
+void Game::main_cyrcle() {
     do {
         while (running) {
             main_screen->set_all_el(EMPTY);
             show_screen();
             who_go();
             get_input_cell(x, y, MSG_INPUT);
-            
+            make_stap();
+            set_els();
 
 
             counter++;
             //tmp
-            running = false;
+            // running = false;
         } 
     } while (one_more);
 }
@@ -65,9 +68,9 @@ void Game::show_screen() {
 
 void Game::who_go() {
     if (counter%2 == 0) {
-        cout << BLUE << "Cross" << RESET << "is going now." << endl;
+        cout << BLUE << "Cross" << RESET << " is going now." << endl;
     } else {
-        cout << RAD << "Cyrcle" << RESET << "is going now." << endl;
+        cout << RAD << "Cyrcle" << RESET << " is going now." << endl;
     }
 }
 
@@ -75,13 +78,16 @@ void Game::get_input_cell(int& x, int& y, const char* msg)  {
     cout << msg;
     cin >> cell;
     if (get_str_len(cell) != 2) {
-        get_input_cell(x, y, MSG_NUT_CORRECT_INPUT);
+        get_input_cell(x, y, MSG_NOT_CORRECT_INPUT);
     }
     int tmp_x, tmp_y;
-    tmp_x = convert_char_to_int(cell[0]) + 1;
-    tmp_y = convert_char_to_int(cell[1]) + 1;
-    if ((tmp_x < 1) || (tmp_x > 3) || (tmp_y < 1) || (tmp_y > 3)) {
-        get_input_cell(x, y, MSG_NUT_CORRECT_INPUT);
+    tmp_x = convert_char_to_int(cell[0]) - 1;
+    tmp_y = convert_char_to_int(cell[1]) - 1;
+    if ((tmp_x < 0) || (tmp_x > 2) || (tmp_y < 0) || (tmp_y > 2)) {
+        get_input_cell(x, y, MSG_NOT_CORRECT_INPUT);
+    }
+    if (main_screen->get_el(tmp_x, tmp_y) != EMPTY) {
+        get_input_cell(x, y, MSG_NOT_EMPTY_CELL);
     }
     x = tmp_x;
     y = tmp_y;
@@ -97,4 +103,26 @@ int Game::get_str_len(const char* str) {
 
 int Game::convert_char_to_int(const char el) {
     return int(el) - int('0');
+}
+
+void Game::make_stap() {
+    if (counter%2 == 0) {
+        player_cross->make_stap(x, y);
+    } else {
+        player_cicrle->make_stap(x, y);
+    }
+}
+
+void Game::set_els() {
+    int cross_x, cross_y, circle_x, circle_y;
+    for (int i = 0; i < COUNT_OF_STAPS; i++) {
+        player_cross->get_el(i, cross_x, cross_y);
+        player_cross->get_el(i, circle_x, circle_y);
+        if ((cross_x != -1) && (cross_y != -1)) {
+            main_screen->set_el(cross_x, cross_y, BLUE_CROSS);
+        }
+        if ((circle_x != -1) && (circle_y != -1)) {
+            main_screen->set_el(circle_x, circle_y, RAD_CIRCLE);
+        }
+    }
 }

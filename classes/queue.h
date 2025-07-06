@@ -48,6 +48,8 @@ public:
 
     void peek(int& x, int& y);
 
+    void peek(const int num_of_el, int& x, int& y);
+
     void pop(int& x, int& y);
 
     int get_len();

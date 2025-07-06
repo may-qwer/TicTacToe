@@ -11,7 +11,7 @@ private:
     int counter;
     Screen* main_screen;
     Player* player_cross;
-    Player* player_cyrcle;
+    Player* player_cicrle;
     char* cell;
     int x, y;
 
@@ -24,9 +24,13 @@ private:
     int get_str_len(const char* str);
 
     int convert_char_to_int(const char el);
+
+    void make_stap();
+
+    void set_els();
     
 public:
-    void main_cycle();
+    void main_cyrcle();
 
     Game();
 

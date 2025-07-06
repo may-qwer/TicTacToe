@@ -77,6 +77,17 @@ void Queue::peek(int& x, int& y) {
     y = head->get_next()->get_y();
 }
 
+void Queue::peek(const int num_of_el, int& x, int& y) {
+    Note* tmp = new Note;
+    tmp = head;
+    for (int i = 0; i < num_of_el; i++) {
+        tmp = tmp->get_next();
+    }
+    x = tmp->get_x();
+    y = tmp->get_y();
+    delete tmp;
+}
+
 void Queue::pop(int& x, int& y) {
     if (get_len() != 0) {
         Note* tmp = new Note;
