@@ -40,13 +40,13 @@ void Game::main_cyrcle() {
             show_screen();
             who_go();
             get_input_cell(x, y, MSG_INPUT);
-            make_stap();
-            set_els();
+            // set_els();
+            // make_stap();
 
 
             counter++;
             //tmp
-            // running = false;
+            running = false;
         } 
     } while (one_more);
 }
@@ -80,17 +80,14 @@ void Game::get_input_cell(int& x, int& y, const char* msg)  {
     if (get_str_len(cell) != 2) {
         get_input_cell(x, y, MSG_NOT_CORRECT_INPUT);
     }
-    int tmp_x, tmp_y;
-    tmp_x = convert_char_to_int(cell[0]) - 1;
-    tmp_y = convert_char_to_int(cell[1]) - 1;
-    if ((tmp_x < 0) || (tmp_x > 2) || (tmp_y < 0) || (tmp_y > 2)) {
+    x = convert_char_to_int(cell[0]) - 1;
+    y = convert_char_to_int(cell[1]) - 1;
+    if ((x < 0) || (x > 2) || (y < 0) || (y > 2)) {
         get_input_cell(x, y, MSG_NOT_CORRECT_INPUT);
     }
-    if (main_screen->get_el(tmp_x, tmp_y) != EMPTY) {
+    if (main_screen->get_el(x, y) != EMPTY) {
         get_input_cell(x, y, MSG_NOT_EMPTY_CELL);
     }
-    x = tmp_x;
-    y = tmp_y;
 }
 
 int Game::get_str_len(const char* str) {
@@ -116,8 +113,8 @@ void Game::make_stap() {
 void Game::set_els() {
     int cross_x, cross_y, circle_x, circle_y;
     for (int i = 0; i < COUNT_OF_STAPS; i++) {
-        player_cross->get_el(i, cross_x, cross_y);
-        player_cross->get_el(i, circle_x, circle_y);
+        player_cross->get_el(i+1, cross_x, cross_y);
+        player_cross->get_el(i+1, circle_x, circle_y);
         if ((cross_x != -1) && (cross_y != -1)) {
             main_screen->set_el(cross_x, cross_y, BLUE_CROSS);
         }

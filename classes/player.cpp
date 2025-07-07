@@ -28,7 +28,7 @@ void Player::check_for_win() {
 }
 
 void Player::set_all_cell_empty() {
-    for (int i = 0; i < staps.get_len(); i++) {
+    for (int i = 0; i < staps.get_max_len(); i++) {
         staps.push(-1, -1);
     }
 }

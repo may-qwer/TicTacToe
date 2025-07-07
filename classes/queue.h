@@ -52,6 +52,8 @@ public:
 
     void pop(int& x, int& y);
 
+    int get_max_len();
+
     int get_len();
 
     void remove();

@@ -78,14 +78,12 @@ void Queue::peek(int& x, int& y) {
 }
 
 void Queue::peek(const int num_of_el, int& x, int& y) {
-    Note* tmp = new Note;
-    tmp = head;
+    Note* tmp = head;
     for (int i = 0; i < num_of_el; i++) {
         tmp = tmp->get_next();
     }
     x = tmp->get_x();
     y = tmp->get_y();
-    delete tmp;
 }
 
 void Queue::pop(int& x, int& y) {
@@ -108,6 +106,10 @@ int Queue::get_len(Note* el) {
 
 int Queue::get_len() {
     return get_len(head);
+}
+
+int Queue::get_max_len() {
+    return len;
 }
 
 void Queue::remove() {
