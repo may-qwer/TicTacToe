@@ -18,8 +18,7 @@ void Player::get_el(const int num_of_el, int& x, int& y) {
 }
 
 void Player::make_stap(const int x, const int y) {
-    int tmp_x, tmp_y;
-    staps.pop(tmp_x, tmp_y);
+    staps.pop();
     staps.push(x, y);
 }
 

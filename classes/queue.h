@@ -3,10 +3,10 @@
 
 class Note {
 private:
-    int data_x;
-    int data_y;
-    Note* next;
-    Note* prev;
+    int data_x = -127;
+    int data_y = -127;
+    Note* next = nullptr;
+    Note* prev = nullptr;
 
 public:
     Note();
@@ -51,6 +51,8 @@ public:
     void peek(const int num_of_el, int& x, int& y);
 
     void pop(int& x, int& y);
+
+    void pop();
 
     int get_max_len();
 

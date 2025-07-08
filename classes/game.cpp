@@ -34,24 +34,26 @@ Game::~Game() {
 }
 
 void Game::main_cyrcle() {
+    int x, y;
     do {
+        main_screen->set_all_el(EMPTY);
         while (running) {
-            main_screen->set_all_el(EMPTY);
             show_screen();
             who_go();
             get_input_cell(x, y, MSG_INPUT);
-            // set_els();
-            // make_stap();
+            make_stap(x, y);
+            set_els_to_screen();
 
 
             counter++;
             //tmp
-            running = false;
+            // running = false;
         } 
     } while (one_more);
 }
 
 void Game::show_screen() {
+    cout << endl;
     cout << "  | 1 | 2 | 3 |" << endl;
     cout << "---------------" << endl;
     for (int i = 0; i < SIZE_OF_SCREEN; i++) {
@@ -102,7 +104,7 @@ int Game::convert_char_to_int(const char el) {
     return int(el) - int('0');
 }
 
-void Game::make_stap() {
+void Game::make_stap(const int x, const int y) {
     if (counter%2 == 0) {
         player_cross->make_stap(x, y);
     } else {
@@ -110,16 +112,25 @@ void Game::make_stap() {
     }
 }
 
-void Game::set_els() {
+void Game::set_els_to_screen() {
     int cross_x, cross_y, circle_x, circle_y;
+    main_screen->set_all_el(EMPTY);
     for (int i = 0; i < COUNT_OF_STAPS; i++) {
         player_cross->get_el(i+1, cross_x, cross_y);
-        player_cross->get_el(i+1, circle_x, circle_y);
+        player_cicrle->get_el(i+1, circle_x, circle_y);
         if ((cross_x != -1) && (cross_y != -1)) {
             main_screen->set_el(cross_x, cross_y, BLUE_CROSS);
         }
         if ((circle_x != -1) && (circle_y != -1)) {
             main_screen->set_el(circle_x, circle_y, RAD_CIRCLE);
         }
+    }
+}
+
+void Game::check_win() {
+    if (counter%2 == 0) {
+        player_cross->check_for_win();
+    } else {
+        player_cicrle->check_for_win();
     }
 }

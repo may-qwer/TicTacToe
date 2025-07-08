@@ -88,10 +88,17 @@ void Queue::peek(const int num_of_el, int& x, int& y) {
 
 void Queue::pop(int& x, int& y) {
     if (get_len() != 0) {
-        Note* tmp = new Note;
-        tmp = head->get_next();
+        Note* tmp = head->get_next();
         x = head->get_next()->get_x();
         y = head->get_next()->get_y();
+        head->set_next(head->get_next()->get_next());
+        delete tmp;
+    }
+}
+
+void Queue::pop() {
+    if (get_len() != 0) {
+        Note* tmp = head->get_next();
         head->set_next(head->get_next()->get_next());
         delete tmp;
     }

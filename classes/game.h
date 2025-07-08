@@ -13,7 +13,6 @@ private:
     Player* player_cross;
     Player* player_cicrle;
     char* cell;
-    int x, y;
 
     void show_screen();
 
@@ -25,9 +24,11 @@ private:
 
     int convert_char_to_int(const char el);
 
-    void make_stap();
+    void make_stap(const int x, const int y);
 
-    void set_els();
+    void set_els_to_screen();
+
+    void check_win();
     
 public:
     void main_cyrcle();
