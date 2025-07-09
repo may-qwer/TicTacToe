@@ -4,6 +4,17 @@
 #include "screen.h" 
 #include "player.h"
 
+#define SIZE_OF_SCREEN 3
+#define BLUE_CROSS "\033[1;34mX\033[0m"
+#define RAD_CIRCLE "\033[1;31mO\033[0m"
+#define EMPTY " "
+#define BLUE "\033[1;34m"
+#define RAD "\033[1;31m"
+#define RESET "\033[0m"
+#define MSG_INPUT "Enter number, like 11, of cell, where you wont to set you sign: "
+#define MSG_NOT_CORRECT_INPUT "Your input is not correct. Try again: "
+#define MSG_NOT_EMPTY_CELL "You choose not empty cell. Try again: "
+
 class Game {
 private:
     bool running;
@@ -29,6 +40,8 @@ private:
     void set_els_to_screen();
 
     void check_win();
+
+    bool is_one_more();
     
 public:
     void main_cyrcle();

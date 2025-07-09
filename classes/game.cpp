@@ -3,19 +3,6 @@
 
 using namespace std;
 
-#define SIZE_OF_SCREEN 3
-#define BLUE_CROSS "\033[1;34mX\033[0m"
-#define RAD_CIRCLE "\033[1;31mO\033[0m"
-#define EMPTY " "
-#define BLUE "\033[1;34m"
-#define RAD "\033[1;31m"
-#define RESET "\033[0m"
-#define MSG_INPUT "Enter number, like 11, of cell, where you wont to set you sign: "
-#define MSG_NOT_CORRECT_INPUT "Your input is not correct. Try again: "
-#define MSG_NOT_EMPTY_CELL "You choose not empty cell. Try again: "
-
-
-
 Game::Game() {
     running = true;
     one_more = false;
@@ -43,12 +30,10 @@ void Game::main_cyrcle() {
             get_input_cell(x, y, MSG_INPUT);
             make_stap(x, y);
             set_els_to_screen();
-
-
+            check_win();
             counter++;
-            //tmp
-            // running = false;
         } 
+    
     } while (one_more);
 }
 
@@ -129,8 +114,12 @@ void Game::set_els_to_screen() {
 
 void Game::check_win() {
     if (counter%2 == 0) {
-        player_cross->check_for_win();
+        running = player_cross->check_for_win(main_screen);
     } else {
-        player_cicrle->check_for_win();
+        running = player_cicrle->check_for_win(main_screen);
     }
+}
+
+bool Game::is_one_more() {
+    
 }

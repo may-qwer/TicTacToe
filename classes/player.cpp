@@ -22,8 +22,25 @@ void Player::make_stap(const int x, const int y) {
     staps.push(x, y);
 }
 
-void Player::check_for_win() {
-
+bool Player::check_for_win(Screen* screen) {
+    int k = 0;
+    int x, y;
+    for (int i = 0; i < COUNT_OF_WIN_SITUATIONS; i++) {
+        for (int j = 0; j < COUNT_OF_SIGN_IN_WIN_SITUATIONS; j++) {
+            x = j/10;
+            y = j%10;
+            if (screen->get_el(x, y) == sign) {
+                k++;
+            }
+        }
+        if (k == 3) {
+            return true;
+        }
+        k = 0;
+        x = 0;
+        y = 0;
+    }
+    return false;
 }
 
 void Player::set_all_cell_empty() {
