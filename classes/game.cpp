@@ -9,14 +9,14 @@ Game::Game() {
     counter = 0;
     main_screen = new Screen(SIZE_OF_SCREEN, SIZE_OF_SCREEN);
     player_cross = new Player(BLUE_CROSS);
-    player_cicrle = new Player(RAD_CIRCLE);
+    player_circle = new Player(RED_CIRCLE);
     cell = new char[2];
 }
 
 Game::~Game() {
     delete main_screen;
     delete player_cross;
-    delete player_cicrle;
+    delete player_circle;
     delete cell;
 }
 
@@ -33,7 +33,9 @@ void Game::main_cyrcle() {
             check_win();
             counter++;
         } 
-    
+        show_screen();
+        congratulation();
+        is_one_more();
     } while (one_more);
 }
 
@@ -57,7 +59,7 @@ void Game::who_go() {
     if (counter%2 == 0) {
         cout << BLUE << "Cross" << RESET << " is going now." << endl;
     } else {
-        cout << RAD << "Cyrcle" << RESET << " is going now." << endl;
+        cout << RED << "Cyrcle" << RESET << " is going now." << endl;
     }
 }
 
@@ -93,7 +95,7 @@ void Game::make_stap(const int x, const int y) {
     if (counter%2 == 0) {
         player_cross->make_stap(x, y);
     } else {
-        player_cicrle->make_stap(x, y);
+        player_circle->make_stap(x, y);
     }
 }
 
@@ -102,24 +104,44 @@ void Game::set_els_to_screen() {
     main_screen->set_all_el(EMPTY);
     for (int i = 0; i < COUNT_OF_STAPS; i++) {
         player_cross->get_el(i+1, cross_x, cross_y);
-        player_cicrle->get_el(i+1, circle_x, circle_y);
+        player_circle->get_el(i+1, circle_x, circle_y);
         if ((cross_x != -1) && (cross_y != -1)) {
             main_screen->set_el(cross_x, cross_y, BLUE_CROSS);
         }
         if ((circle_x != -1) && (circle_y != -1)) {
-            main_screen->set_el(circle_x, circle_y, RAD_CIRCLE);
+            main_screen->set_el(circle_x, circle_y, RED_CIRCLE);
         }
     }
 }
 
 void Game::check_win() {
     if (counter%2 == 0) {
-        running = player_cross->check_for_win(main_screen);
+        running = !(player_cross->check_for_win(main_screen));
     } else {
-        running = player_cicrle->check_for_win(main_screen);
+        running = !(player_circle->check_for_win(main_screen));
     }
 }
 
-bool Game::is_one_more() {
-    
+void Game::congratulation() {
+    if ((counter-1)%2 == 0) {
+        cout << BLUE << "Cross";
+    } else {
+        cout << RED << "Circle";
+    }
+    cout << "is the WINNER!!!\nCONGRATILATIONS!!!!!" << endl;
+}
+
+bool Game::is_one_more(const char* msg) {
+    cout << msg << endl;
+    cin >> ans_one_more;
+    if (get_str_len(ans_one_more) != 1) { 
+        return is_one_more(MSG_NOT_CORRECT_ONE_MORE_ANS);
+    }
+    if ((ans_one_more != "Y") || (ans_one_more != "y") || (ans_one_more != "n") || (ans_one_more != "N")) {
+        return is_one_more(MSG_NOT_CORRECT_ONE_MORE_ANS);
+    }
+    if ((ans_one_more == "y") || (ans_one_more == "Y")) {
+        return true;
+    }
+    return false;
 }
