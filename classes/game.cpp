@@ -8,22 +8,24 @@ Game::Game() {
     one_more = false;
     counter = 0;
     main_screen = new Screen(SIZE_OF_SCREEN, SIZE_OF_SCREEN);
+    main_screen->set_all_el(EMPTY);
     player_cross = new Player(BLUE_CROSS);
     player_circle = new Player(RED_CIRCLE);
     cell = new char[2];
+    ans_one_more = new char[1];
 }
 
 Game::~Game() {
     delete main_screen;
     delete player_cross;
     delete player_circle;
-    delete cell;
+    delete [] cell;
+    delete [] ans_one_more;
 }
 
 void Game::main_cyrcle() {
     int x, y;
     do {
-        main_screen->set_all_el(EMPTY);
         while (running) {
             show_screen();
             who_go();
@@ -35,7 +37,8 @@ void Game::main_cyrcle() {
         } 
         show_screen();
         congratulation();
-        is_one_more();
+        set_start_value();
+        one_more = is_one_more();
     } while (one_more);
 }
 
@@ -124,23 +127,31 @@ void Game::check_win() {
 
 void Game::congratulation() {
     if ((counter-1)%2 == 0) {
-        cout << BLUE << "Cross";
+        cout << BLUE << "Cross" << RESET;
     } else {
-        cout << RED << "Circle";
+        cout << RED << "Circle" << RESET;
     }
-    cout << "is the WINNER!!!\nCONGRATILATIONS!!!!!" << endl;
+    cout << " is the WINNER!!!\nCONGRATILATIONS!!!!!" << endl;
+}
+
+void Game::set_start_value() {
+    counter = 0;
+    main_screen->set_all_el(EMPTY);
+    player_cross->set_all_cell_empty();
+    player_circle->set_all_cell_empty();
+    running = true;
 }
 
 bool Game::is_one_more(const char* msg) {
-    cout << msg << endl;
+    cout << msg;
     cin >> ans_one_more;
     if (get_str_len(ans_one_more) != 1) { 
         return is_one_more(MSG_NOT_CORRECT_ONE_MORE_ANS);
     }
-    if ((ans_one_more != "Y") || (ans_one_more != "y") || (ans_one_more != "n") || (ans_one_more != "N")) {
+    if ((ans_one_more[0] != 'Y') && (ans_one_more[0] != 'y') && (ans_one_more[0] != 'n') && (ans_one_more[0] != 'N')) {
         return is_one_more(MSG_NOT_CORRECT_ONE_MORE_ANS);
     }
-    if ((ans_one_more == "y") || (ans_one_more == "Y")) {
+    if ((ans_one_more[0] == 'y') || (ans_one_more[0] == 'Y')) {
         return true;
     }
     return false;

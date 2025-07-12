@@ -16,6 +16,8 @@
 #define MSG_NOT_EMPTY_CELL "You choose not empty cell. Try again: "
 #define MSG_ONE_MORE "\nWould you like to play one more game? Y/n: "
 #define MSG_NOT_CORRECT_ONE_MORE_ANS "Your input is not correct. Enter y or Y is you would, or n or N is you would not. Try again: "
+#define ARR_OF_YES_NO_ANS {'y', 'Y', 'n', 'N'}
+#define LEN_OF_ARR_OF_YES_NO_ANS 4
 
 class Game {
 private:
@@ -45,6 +47,8 @@ private:
     void check_win();
 
     void congratulation();
+
+    void set_start_value();
 
     bool is_one_more(const char* msg = MSG_ONE_MORE);
     

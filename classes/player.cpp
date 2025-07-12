@@ -27,8 +27,8 @@ bool Player::check_for_win(Screen* screen) {
     int x, y;
     for (int i = 0; i < COUNT_OF_WIN_SITUATIONS; i++) {
         for (int j = 0; j < COUNT_OF_SIGN_IN_WIN_SITUATIONS; j++) {
-            x = j/10;
-            y = j%10;
+            x = WIN_SITUATIONS[i][j]/10;
+            y = WIN_SITUATIONS[i][j]%10;
             if (screen->get_el(x, y) == sign) {
                 k++;
             }
